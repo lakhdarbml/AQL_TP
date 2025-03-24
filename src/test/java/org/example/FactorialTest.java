@@ -37,5 +37,5 @@ class FactorialTest {
         }, "Un nombre négatif doit lancer IllegalArgumentException");
         assertEquals("n must be positive", thrown.getMessage());
     }
-
+//fin partie 1
 }
