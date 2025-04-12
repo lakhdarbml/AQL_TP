@@ -2,105 +2,109 @@
 
 ## 🎯 Objectifs
 
-Ce TP a pour but de :
-- Mesurer la couverture du code selon 3 critères : **lignes**, **branches**, **conditions**
-- Écrire des tests unitaires robustes avec **JUnit 5**
-- Utiliser **IntelliJ IDEA** pour visualiser et analyser la couverture
-- Identifier et corriger les erreurs dans le code source
+- Évaluer la couverture du code avec JUnit 5 dans IntelliJ IDEA.
+- Appliquer trois types de couverture : **lignes**, **branches**, **conditions**.
+- Identifier et corriger les bugs présents dans certaines méthodes.
+- Rédiger des tests unitaires complets et représentatifs.
 
 ---
 
-## 🗂️ Structure du projet
+## 📁 Structure des tests
+
+Pour chaque exercice, les tests sont répartis selon le critère de couverture :
 
 ```
-tp1/
-├── src/
-│   ├── main/
-│   │   └── java/org/example/Palindrome.java
-│   └── test/
-│       ├── java/linecoveragetest/Exo1Test.java
-│       ├── java/branchcoveragetest/Exo1Test.java
-│       └── java/conditioncoveragetest/Exo1Test.java
+org.example.LineCoverageTest.ExoXTest
+org.example.BranchCoverageTest.ExoXTest
+org.example.ConditionCoverageTest.ExoXTest
 ```
 
 ---
 
-## 🧪 Tests
+## 📌 Résumé par exercice
 
-### ✅ Couverture des lignes
-- Tous les chemins simples sont couverts : cas palindrome, non palindrome, casse, espaces, null.
+### ✅ Exercice 1 : Palindrome
 
-### ✅ Couverture des branches
-- Chaque `if`/`else` et boucle `while` sont parcourus.
-- Tests sur :
-  - palindrome pair/impair
-  - chaîne non palindrome
-  - entrée null
-
-### ✅ Couverture des conditions
-- Les conditions booléennes `i < j` et `s.charAt(i) != s.charAt(j)` sont testées avec `true` et `false`.
+- Vérifie si une chaîne est un palindrome (casse et espaces ignorés).
+- 🐞 Bug corrigé : `i--` et `j++` au lieu de `i++` / `j--`.
+- ✅ Couverture 100% atteinte après correction.
 
 ---
 
-## 🐞 Bugs identifiés
+### ✅ Exercice 2 : Anagram
 
-### ❌ **Bug dans la méthode `Palindrome.isPalindrome()`**
-
-```java
-while (i < j) {
-    if (s.charAt(i) != s.charAt(j)) {
-        return false;
-    }
-    j++;  // ❌ erreur
-    i--;  // ❌ erreur
-}
-```
-
-### ✅ **Correction appliquée :**
-
-```java
-while (i < j) {
-    if (s.charAt(i) != s.charAt(j)) {
-        return false;
-    }
-    i++;  // ✅ on avance i
-    j--;  // ✅ on recule j
-}
-```
-
-### 📌 Conséquence :
-L'erreur causait une `StringIndexOutOfBoundsException` dans certains cas de test (ex: "Esope reste ici et se repose").
+- Vérifie si deux chaînes sont des anagrammes.
+- 🐞 Bug corrigé : boucle `for (i <= length)` → `i < length`.
+- ✅ Couverture complète des cas `null`, longueurs différentes, etc.
 
 ---
 
-## 📊 Résultats de la couverture (IntelliJ IDEA)
+### ✅ Exercice 3 : BinarySearch
 
-- ✅ **Lignes :** 100%
-- ✅ **Branches :** 100%
-- ✅ **Conditions :** 100%
-
-Afficher les résultats via : `Run > Run with Coverage`
-
-Légende :
-- 🟩 Vert = ligne exécutée
-- 🟥 Rouge = ligne non exécutée
-- 🟨 Jaune = condition ou branche partiellement couverte
+- Implémente une recherche binaire.
+- 🐞 Bug corrigé : condition de boucle `while (low < high)` → `while (low <= high)`.
+- ✅ Tests couvrant tous les cas de recherche (élément début, milieu, fin, absent).
 
 ---
 
-## 📁 Nomenclature recommandée pour GitHub
+### ✅ Exercice 4 : QuadraticEquation
 
-```
-TP1/
-├── LineCoverageTest/Exo1Test.class
-├── BranchCoverageTest/Exo1Test.class
-├── ConditionCoverageTest/Exo1Test.class
-└── README.md
-```
+- Résout une équation du 2e degré.
+- 🐞 Version buggy :
+  - `delta < 0` retourne `[0]` au lieu de `null`.
+  - `delta == 0` retourne `null` au lieu d'une racine.
+  - `delta > 0` retourne une seule racine.
+- ✅ Version corrigée conforme à la théorie.
 
 ---
 
-## 📌 Remarque
+### ✅ Exercice 5 : RomanNumeral
 
-Dans ce TP, les tests des trois types de couverture sont **similaires** car la méthode `isPalindrome` est courte, avec peu de branches.  
-Les différences entre les tests sont minimes, mais ont été conservées pour respecter les consignes pédagogiques.
+- Convertit un entier (1-3999) en chiffre romain.
+- 🐞 Bug : boucle `for (i <= symbols.length)` → provoque `ArrayIndexOutOfBoundsException`.
+- ✅ Corrigé avec `i < symbols.length`.
+
+---
+
+### ✅ Exercice 6 : FizzBuzz
+
+- Renvoie “Fizz”, “Buzz”, “FizzBuzz” ou le nombre selon sa divisibilité.
+- 🐞 Version buggy :
+  - Vérifie `% 3` avant `% 15`, donc `"FizzBuzz"` jamais retourné.
+  - Condition `n <= 0` au lieu de `n <= 1`.
+- ✅ Version corrigée avec les bons ordres de priorité.
+
+---
+
+## ⚠️ Remarque
+
+Les tests de la version **buggy** sont volontairement écrits avec les bons résultats attendus, afin de provoquer des échecs et identifier les erreurs.
+
+Chaque version corrigée passe tous les tests de couverture avec succès.
+
+---
+
+## ✅ Lancer avec IntelliJ
+
+- `clic droit > Run with Coverage`
+- Activer les couleurs dans l'éditeur
+- Vérifier les taux de couverture dans la fenêtre `Coverage`
+
+---
+
+## 🧪 Résultat attendu
+
+| Exercice | Lignes | Branches | Conditions |
+|----------|--------|----------|------------|
+| Exo1     | 100%   | 100%     | 100%       |
+| Exo2     | 100%   | 100%     | 100%       |
+| Exo3     | 100%   | 100%     | 100%       |
+| Exo4     | 100%   | 100%     | 100%       |
+| Exo5     | 100%   | 100%     | 100%       |
+| Exo6     | 100%   | 100%     | 100%       |
+
+---
+
+## 👨‍💻 Groupe 4
+
+Travail réalisé dans le cadre du TP de qualité logicielle — JUnit et couverture de code.
