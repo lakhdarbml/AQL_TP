@@ -70,3 +70,4 @@ public class UserServiceTest {
         assertEquals("salim@email.com", utilisateurCapture.getEmail());
     }
 }
+
