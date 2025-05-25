@@ -65,6 +65,15 @@
             <version>1.19.3</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- JUnit Jupiter Integration with Testcontainers -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.19.3</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
